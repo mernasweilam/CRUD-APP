@@ -8,8 +8,8 @@
        <li class="nav-item m-1">
         <router-link class="btn btn-light btn-outline-primary" to="/employees">Employees</router-link>
       </li>
-       <li class="nav-item m-1">
-        <router-link class="btn btn-light btn-outline-primary" to="/teams">Tasks</router-link>
+       <li class="nav-item m-1 ">
+        <router-link class="btn btn-light btn-outline-primary" to="/teams">Taskssss</router-link>
       </li>
     </ul>
   </nav>
