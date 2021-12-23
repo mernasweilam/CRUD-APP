@@ -1,18 +1,18 @@
 const express = require('express');
 const mongodb = require('mongodb');
-
+const auth = require("../../middleware/auth");
 //create our router
 const router = express.Router();
 
 //Get Employees
-router.get('/', async(req, res) => {
+router.get('/', auth, async(req, res) => {
     const Employees = await loadEmployeesCollection();
    console.log('hello', req)
     res.send(await Employees.find({}).toArray())
 })
 
 //Add Employees
-router.post('/', async(req,res)=>{
+router.post('/', auth, async(req,res)=>{
     const Employees = await loadEmployeesCollection();
     console.log('req', req)
     await Employees.insertOne({
