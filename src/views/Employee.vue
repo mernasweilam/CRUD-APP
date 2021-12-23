@@ -15,6 +15,7 @@
         <th>Skills</th>
         <th>Edit</th>
         <th>Delete</th>
+        <th>Tasks</th>
       </tr>
       </thead>
     <tbody>
@@ -30,60 +31,121 @@
         <td><i class="fa fa-pencil" data-bs-toggle="modal" data-bs-target="#employeeModal" 
         @click="editClick(employee)"></i></td>
         <td><i class="fa fa-trash" @click="deleteEmployee(employee._id)"></i></td>
+        <!-- Add Task -->
+        <td> 
+          <button type="button" class="btn btn-primary m-2 fload-end" data-bs-toggle="modal" data-bs-target="#taskModal"
+                @click="addTask(employee)">
+                  Add Task
+          </button>
+        </td>
     </tr>
     </tbody>
 </table>
-<div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="employeeModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-      <h5 class="modal-title" id="employeeModalLabel">{{modalTitle}}</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal"
-      aria-label="Close"></button>
-    </div>
-    <div class="modal-content">
-      <div class="input-group mb-3">
-          <span class="input-group-text">Employee code</span>
-          <input type="number" class="form-control" v-model="code"/>
+  <!-- add employee modal-->
+  <div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="employeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="employeeModalLabel">{{modalTitle}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+        aria-label="Close"></button>
       </div>
-      <div class="input-group mb-3">
-          <span class="input-group-text">Employee Name</span>
-          <input type="text" class="form-control" v-model="name"/>
-      </div>
-       <div class="input-group mb-3">
-          <span class="input-group-text">Employee JoinDate</span>
-          <input type="date" class="form-control" v-model="joinDate"/>
-      </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text">Employee skills</span>
-            <div class="dropdown" @click="showDropdown">
-                <select class="c-form-input">
-                    <option value="">Please Select Your Skills</option>
-                </select>
-             </div>
-            <div class="multiselect">
-                <ul v-if="show">
-                    <li v-for="(skill, index) in basicSkills" :key="index">
-                        <input type="checkbox" :id="index" :value="skill" v-model="skills">
-                        <label :for="index">{{ skill }}</label>
-                    </li>
-                </ul>
-            </div>
-           
+      <div class="modal-content">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Employee code</span>
+            <input type="number" class="form-control" v-model="code"/>
         </div>
-         
-             <ul class="col" v-if="skills.length">
-                <li v-for="item in skills" :key="item">{{ item }}</li>
-            </ul>
-      <button type="button" v-if="employeeId==0" class="btn btn-primary" @click="createEmployee">Create</button>
-      <button type="button" v-if="employeeId!=0" class="btn btn-primary" @click="updateEmployee(employeeId)">Update</button>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Employee Name</span>
+            <input type="text" class="form-control" v-model="name"/>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Employee JoinDate</span>
+            <input type="date" class="form-control" v-model="joinDate"/>
+        </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text">Employee skills</span>
+              <div class="dropdown" @click="showDropdown">
+                  <select class="c-form-input">
+                      <option value="">Please Select Your Skills</option>
+                  </select>
+              </div>
+              <div class="multiselect">
+                  <ul v-if="show">
+                      <li v-for="(skill, index) in basicSkills" :key="index">
+                          <input type="checkbox" :id="index" :value="skill" v-model="skills">
+                          <label :for="index">{{ skill }}</label>
+                      </li>
+                  </ul>
+              </div>
+            
+          </div>
+          
+              <ul class="col" v-if="skills.length">
+                  <li v-for="item in skills" :key="item">{{ item }}</li>
+              </ul>
+        <button type="button" v-if="employeeId==0" class="btn btn-primary" @click="createEmployee">Create</button>
+        <button type="button" v-if="employeeId!=0" class="btn btn-primary" @click="updateEmployee(employeeId)">Update</button>
 
+      </div>
     </div>
   </div>
-</div>
 
-</div>
+  </div>
+ <!-- add task modal-->
+  <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="TaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="TaskModalLabel">Add Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+        aria-label="Close"></button>
+      </div>
+      <div class="modal-content">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Task code</span>
+            <input type="number" class="form-control" v-model="taskCode"/>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Task Name</span>
+            <input type="text" class="form-control" v-model="taskName"/>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Task Description</span>
+            <input type="text" class="form-control" v-model="taskDesc"/>
+        </div>
+            <div class="input-group mb-3">
+              <p>Employee logs</p>
+                <ul>
+                  <li>
+                     <div class="input-group mb-3">
+                      <span class="input-group-text">Employee Code</span>
+                      <input type="text" class="form-control" v-model="logs.code" readonly/>
+                    </div>
+                  </li>
+                   <li>
+                     <div class="input-group mb-3">
+                      <span class="input-group-text">Employee loggedTime</span>
+                      <input type="text" class="form-control" v-model="logs.loggedTime"/>
+                    </div>
+                  </li>
+                   <li>
+                     <div class="input-group mb-3">
+                      <span class="input-group-text">logStartDate</span>
+                      <input type="date" class="form-control" v-model="logs.startDate"/>
+                    </div>
+                  </li>
+                </ul>
+             
+            
+          </div>
+          
+        <button type="button" class="btn btn-primary" @click="createTask">Create Task</button>
+      </div>
+    </div>
+  </div>
 
+  </div>
     </div>
   </div>
 </template>
@@ -108,6 +170,18 @@ export default {
           skills:[],
           modalTitle: '',
           show: false,
+          taskCode: Number,
+          taskName: '',
+          taskDesc:'',
+          logs: [{
+            code: '',
+            loggedTime : '',
+            startDate:''
+          }],
+          
+
+
+
       }
   },
 
@@ -130,6 +204,10 @@ export default {
       this.code = '';
       this.joinDate = '';
       this.skills = [];
+    },
+    addTask(employee){
+      this.logs.code = employee.code
+
     },
     //edit existing employee
     editClick(employee){
@@ -182,11 +260,36 @@ export default {
           alert(data.data);
       })
       
-    }
+    },
+        //CREATE new task
+    createTask(){
+       console.log('this', this)
+      crudAxios.post(`http://localhost:5000/api/tasks`, { 
+        taskCode: this.taskCode,
+        taskName: this.taskName,
+        taskDesc: this.taskDesc,
+        logs: {
+          code: this.logs.code,
+          loggedTime: this.logs.loggedTime,
+          startDate: this.logs.startDate
+        }
+        // code: this.logs.code,
+        // loggedTime: this.logs.loggedTime,
+        // startDate: this.logs.startDate
+          })
+         
+      .then((data)=>{
+         alert('task added');
+        console.log('tasks', data)
+      })
+    },
   },
   mounted(){
       console.log('skills', this.skills)
       this.getAllEmployees();
+  },
+  computed(){
+
   }
 }
 </script>

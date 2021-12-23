@@ -2,6 +2,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Team from "../views/Team.vue";
 import Employee from "../views/Employee.vue";
+import Task from "../views/Task.vue";
 import Login from "../views/Login.vue"
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
     name: "Employee",
     component: Employee,
   },
+  {
+    path: "/tasks",
+    name: "Task",
+    component: Task,
+  }
   
 ];
 
