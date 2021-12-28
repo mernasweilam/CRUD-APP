@@ -4,6 +4,7 @@ import Team from "../views/Team.vue";
 import Employee from "../views/Employee.vue";
 import Task from "../views/Task.vue";
 import Login from "../views/Login.vue"
+import SearchResult from '../views/SearchResult'
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: "/tasks",
     name: "Task",
     component: Task,
+  },
+  {
+    path: "/search",
+    name: "SearchResult",
+    component: SearchResult
   }
   
 ];
