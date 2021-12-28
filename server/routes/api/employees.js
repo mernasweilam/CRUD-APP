@@ -19,7 +19,8 @@ router.post('/', auth, async(req,res)=>{
         code: req.body.code,
         name: req.body.name,
         joinDate: req.body.joinDate,
-        skills: req.body.skills
+        skills: req.body.skills,
+        teams: req.body.teams
     });
     res.status(201).send('Added Successfully'); // means something new is created
 })
@@ -35,7 +36,7 @@ router.delete('/:id', async(req,res)=>{
 router.put('/:id', async(req,res)=>{
     const Employees = await loadEmployeesCollection();
     const id = {_id: new mongodb.ObjectId(req.params.id)};
-    const newValues = {$set: { code: req.body.code, name: req.body.name , joinDate: req.body.joinDate, skills: req.body.skills}}
+    const newValues = {$set: { code: req.body.code, name: req.body.name , joinDate: req.body.joinDate, skills: req.body.skills, teams: req.body.teams}}
     await Employees.updateOne(id, newValues,{})
     res.status(200).send('updated Successfully'); // status Ok
 })
